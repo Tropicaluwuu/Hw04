@@ -7,23 +7,16 @@ public class SmartHomeController {
         Scanner scanner = new Scanner(System.in);
         DeviceManager manager = new DeviceManager();
 
-        System.out.print("Please enter the number of devices to add: ");
+        System.out.print("Enter number of devices to add: ");
         int count = Integer.parseInt(scanner.nextLine());
 
         for (int i = 0; i < count; i++) {
-            System.out.println("------------------------------");
+            System.out.println("------------");
 
-            // keep asking until they enter a valid device type
-            String type = "";
-            while (!type.equals("Light") && !type.equals("Thermostat")) {
-                System.out.print("Enter device type (Light/Thermostat): ");
-                type = scanner.nextLine();
-                if (!type.equals("Light") && !type.equals("Thermostat")) {
-                    System.out.println("Invalid device type, skipping...");
-                }
-            }
+            System.out.print("Enter device type (Light/Thermostat): ");
+            String type = scanner.nextLine();
 
-            System.out.print("Please enter your device name: ");
+            System.out.print("Enter device name: ");
             String name = scanner.nextLine();
 
             switch (type) {
@@ -31,7 +24,6 @@ public class SmartHomeController {
                     System.out.print("Enter brightness (0-100): ");
                     int brightness = Integer.parseInt(scanner.nextLine());
 
-                    // keep asking until they enter valid brightness
                     while (brightness < 0 || brightness > 100) {
                         System.out.println("Invalid! Brightness must be between 0 and 100.");
                         System.out.print("Enter brightness (0-100): ");
@@ -49,7 +41,7 @@ public class SmartHomeController {
                     break;
 
                 case "Thermostat":
-                    System.out.print("Please enter temperature (F): ");
+                    System.out.print("Enter temperature (°F): ");
                     double temp = Double.parseDouble(scanner.nextLine());
 
                     System.out.print("Is the thermostat ON? (Yes/No): ");
@@ -57,9 +49,14 @@ public class SmartHomeController {
                     boolean thermoOn = thermoStatus.equalsIgnoreCase("yes") || thermoStatus.equalsIgnoreCase("y");
 
                     Thermostat thermostat = new Thermostat(name, temp, thermoOn);
-                    if (thermoOn) thermostat.turnOn(); else thermostat.turnOff();
+                    if (thermoOn) thermostat.turnOn();
+                        else thermostat.turnOff();
                     manager.addDevice(thermostat);
                     System.out.println("Device '" + name + "' got added successfully!");
+                    break;
+
+                default:
+                    System.out.println("Invalid device type, skipping...");
                     break;
             }
         }
