@@ -56,7 +56,7 @@ public class SmartHomeController {
                 }
             }
     
-    System.out.println("");
+    System.out.println("------------");
     manager.displayAllDevices();
 
     scanner.close();
